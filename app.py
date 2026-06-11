@@ -70,34 +70,25 @@ if uploaded_file:
         progress_text = st.empty()
         progress_bar = st.progress(0)
 
-        progress_text.info(
-            "Preparing video..."
-        )
+        progress_text.info("Preparing video...")
 
         with tempfile.NamedTemporaryFile(
             delete=False,
             suffix=".mp4"
         ) as tmp:
 
-            tmp.write(
-                uploaded_file.read()
-            )
-
+            tmp.write(uploaded_file.read())
             video_path = tmp.name
 
         progress_bar.progress(10)
 
-        progress_text.info(
-            "Loading AI model..."
-        )
+        progress_text.info("Loading AI model...")
 
         time.sleep(1)
 
         progress_bar.progress(25)
 
-        progress_text.info(
-            "Analyzing video..."
-        )
+        progress_text.info("Analyzing video...")
 
         start = time.time()
 
@@ -147,10 +138,6 @@ if uploaded_file:
                 f"Analysis completed in {elapsed} seconds"
             )
 
-            # ==========================
-            # PROCESSED VIDEO SECTION
-            # ==========================
-
             if Path(output_file).exists():
 
                 st.subheader(
@@ -165,7 +152,8 @@ if uploaded_file:
                     video_bytes = f.read()
 
                 st.video(
-                    video_bytes
+                    video_bytes,
+                    format="video/mp4"
                 )
 
                 st.download_button(
@@ -174,10 +162,6 @@ if uploaded_file:
                     file_name=Path(output_file).name,
                     mime="video/mp4"
                 )
-
-            # ==========================
-            # SCREENSHOTS SECTION
-            # ==========================
 
             if screenshots_dir.exists():
 
