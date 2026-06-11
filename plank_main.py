@@ -408,10 +408,15 @@ def compose_frame(frame, results, tracker, frame_idx, total_frames, fps):
 def process_video(video_path):
     print(f"\033[92m[5/6] Processing: {video_path}\033[0m")
     base_dir = Path(__file__).parent
+    import shutil
     out_dir = base_dir / "output_dumbbell"
+    if out_dir.exists():
+     shutil.rmtree(out_dir)
     out_dir.mkdir(exist_ok=True)
     shots_dir = base_dir / "screenshots_dumbbell"
-    shots_dir.mkdir(exist_ok=True)
+    if shots_dir.exists():
+     shutil.rmtree(shots_dir)
+     shots_dir.mkdir(exist_ok=True) 
     output_path = str(base_dir / "output_plank_ai.mp4")
     tmp_path = str(out_dir / "tmp_plank.mp4")
 

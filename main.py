@@ -747,16 +747,32 @@ def compose_frame(frame, results, tracker, frame_idx, total_frames, fps, exercis
 # ─── VIDEO PROCESSOR ─────────────────────────────────────────────────────────
 def process_video(video_path, exercise="BICEP CURL"):
     print(f"\033[92m[5/6] Processing: {video_path}  |  Exercise: {exercise}\033[0m")
-    out_dir = Path(r"D:\GYM HELPING AI\gym-computer-vision\Dumbbell Form Checker\output_dumbbell")
+
+    import shutil
+
+    base_dir = Path(__file__).parent
+
+    out_dir = base_dir / "output_dumbbell"
+
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+
     out_dir.mkdir(exist_ok=True)
 
-    shots_dir = Path(r"D:\GYM HELPING AI\gym-computer-vision\Dumbbell Form Checker\screenshots_dumbbell")
+    shots_dir = base_dir / "screenshots_dumbbell"
+
+    if shots_dir.exists():
+        shutil.rmtree(shots_dir)
+
     shots_dir.mkdir(exist_ok=True)
 
-    output_path = r"D:\GYM HELPING AI\gym-computer-vision\Dumbbell Form Checker\output_dumbbell_ai.mp4"
+    output_path = str(base_dir / "output_dumbbell_ai.mp4")
 
     tmp_path = str(out_dir / "tmp.mp4")
 
+    cap = cv2.VideoCapture(video_path)
+        
+        
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print(f"\033[91m[ERROR] Cannot open {video_path}\033[0m"); sys.exit(1)
