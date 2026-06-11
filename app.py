@@ -111,6 +111,7 @@ if uploaded_file:
                 )
 
                 output_file = "output_dumbbell_ai.mp4"
+
                 screenshots_dir = Path(
                     "screenshots_dumbbell"
                 )
@@ -122,6 +123,7 @@ if uploaded_file:
                 )
 
                 output_file = "output_plank_ai.mp4"
+
                 screenshots_dir = Path(
                     "screenshots_plank"
                 )
@@ -145,14 +147,14 @@ if uploaded_file:
                 f"Analysis completed in {elapsed} seconds"
             )
 
+            # ==========================
+            # PROCESSED VIDEO SECTION
+            # ==========================
+
             if Path(output_file).exists():
 
                 st.subheader(
                     "Processed Video"
-                )
-
-                st.video(
-                    output_file
                 )
 
                 with open(
@@ -160,16 +162,29 @@ if uploaded_file:
                     "rb"
                 ) as f:
 
-                    st.download_button(
-                        "⬇ Download Result",
-                        f,
-                        file_name=Path(output_file).name
-                    )
+                    video_bytes = f.read()
+
+                st.video(
+                    video_bytes
+                )
+
+                st.download_button(
+                    "⬇ Download Result",
+                    data=video_bytes,
+                    file_name=Path(output_file).name,
+                    mime="video/mp4"
+                )
+
+            # ==========================
+            # SCREENSHOTS SECTION
+            # ==========================
 
             if screenshots_dir.exists():
 
                 images = sorted(
-                    screenshots_dir.glob("*")
+                    screenshots_dir.glob("*.jpg"),
+                    key=lambda x: x.stat().st_mtime,
+                    reverse=True
                 )
 
                 if images:
@@ -184,7 +199,7 @@ if uploaded_file:
 
                         cols[i % 3].image(
                             str(img),
-                            use_container_width=True
+                            width="stretch"
                         )
 
         except Exception as e:
