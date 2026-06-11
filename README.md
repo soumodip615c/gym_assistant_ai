@@ -46,5 +46,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 ## Dev/Creator
-- **Name:** tubakhxn
-- **GitHub:** [tubakhxn](https://github.com/tubakhxn)
+- **Name:** soumodip
+- **GitHub:** https://github.com/soumodip615c
